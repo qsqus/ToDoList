@@ -1,0 +1,58 @@
+﻿@model List<ToDoTask>
+
+<div class="col-md-6 text-center">
+    <h2>To do:</h2>
+    <ul class="mt-4">
+        @foreach (var obj in Model.FindAll(x => x.IsCompleted == false))
+        {
+            <li>
+                <div class="row">
+                    <div class="col-md-8">
+                        <p class="text-start text-primary">@obj.Content</p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="btn-group">
+                            <a onclick="showPopUp('@Url.Action("CreateOrEdit","ToDoTask", new { id = @obj.Id }, Context.Request.Scheme)', 'Edit Task')" title="Edit" class="btn btn-outline-secondary btn-sm">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a onclick="toggleTaskState('@Url.Action("ToggleCompletedState", "ToDoTask", new {id = @obj.Id}, Context.Request.Scheme)')" title="Complete" class="btn btn-outline-success btn-sm">
+                                <i class="bi bi-check2-square"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+
+<div class="col-md-6 text-center">
+    <h2>Completed:</h2>
+    <ul class="mt-4">
+        @foreach (var obj in Model.FindAll(x => x.IsCompleted == true))
+        {
+            <li>
+                <div class="row">
+                    <div class="col-md-8">
+                        <p class="text-start text-primary">@obj.Content</p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="btn-group">
+                            <a onclick="deleteTask('@Url.Action("Delete", "ToDoTask", new {id = @obj.Id}, Context.Request.Scheme)', true)" title="Delete" class="btn btn-outline-danger btn-sm">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                            <a onclick="showPopUp('@Url.Action("CreateOrEdit","ToDoTask",new { id = @obj.Id }, Context.Request.Scheme)', 'Edit Task')" title="Edit" class="btn btn-outline-secondary btn-sm">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a onclick="toggleTaskState('@Url.Action("ToggleCompletedState", "ToDoTask", new {id = @obj.Id}, Context.Request.Scheme)')" title="Undo Complete" class="btn btn-outline-warning btn-sm">
+                                <i class="bi bi-box-arrow-in-left"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>

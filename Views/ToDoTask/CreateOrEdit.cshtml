@@ -1,0 +1,28 @@
+﻿@model ToDoTask
+
+@{
+    Layout = null;
+}
+
+<form asp-action="CreateOrEdit" method="post" onsubmit="return postForm(this);" autocomplete="off">
+    <input asp-for="Id" hidden />
+    <input asp-for="IsCompleted" hidden />
+
+    <div class="form-floating pb-3">
+        <input asp-for="Content" class="form-control" placeholder="Task" />
+        <label asp-for="Content"></label>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex w-100 btn-group">
+                    @if (Model.Id != 0)
+                    {
+                        <button onclick="deleteTask('@Url.Action("Delete", "ToDoTask", new {id = @Model.Id}, Context.Request.Scheme)', false)" type="button" class="btn btn-outline-danger w-50">Delete</button>
+                    }
+                    <button type="submit" class="btn btn-outline-primary w-50"> @(Model.Id == 0 ? "Create" : "Edit")</button>
+                </div>
+            </div>
+        </div>
+</form>
